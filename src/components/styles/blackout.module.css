@@ -1,0 +1,159 @@
+.banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #0F0F0F;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: top 0.5s ease-out;
+    z-index: 1000;
+}
+
+.banner>div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.behind_banner{
+    width: 100%;
+    height: 45vh;
+    background-color: #0F0F0F;
+}
+
+.banner.hide {
+    top: -100vh;
+}
+
+.icon {
+    animation: moveIcons 3s infinite ease-in-out;
+    padding-bottom: 25px;
+}
+
+.icon:nth-child(2) {
+    animation: moveIcons 2s infinite ease-in-out;
+    padding-bottom: 0;
+    padding-top: 25px;
+}
+
+.icon:nth-child(3) {
+    animation: moveIcons 2.5s infinite ease-in-out;
+    padding-bottom: 25px;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.details {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.details h3 {
+    font-size: 3rem;
+}
+
+.details:nth-of-type(1) {
+    background-color: #0F0F0F;
+    color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.details:nth-of-type(1)>div {
+    padding-left: 10em;
+    width: 25%;
+}
+
+.details:nth-of-type(2) {
+    background-color: #fff;
+    color: #0F0F0F;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.details:nth-of-type(2)>p {
+    width: 50%;
+    text-align: center;
+    font-size: 1.25em;
+}
+
+.details:nth-of-type(2) > div{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 4em;
+}
+
+.details:nth-of-type(3) {
+    width: 60%;
+    background-color: #0F0F0F;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 25px;
+    padding: 0 10em;
+}
+
+.details:nth-of-type(3) h3 {
+    font-size: 2.5rem;
+}
+
+.details:nth-of-type(3) p {
+    font-size: 1.5em;
+}
+
+.details:nth-of-type(3) button {
+    color: #fff;
+    background-color: #0F0F0F;
+    padding: 1em 5em;
+    font-size: 1.5em;
+    font-weight: 600;
+    border: 1px solid #fff;
+    border-radius: 15px;
+    transition: ease-in-out .2s;
+}
+
+.details:nth-of-type(3) button:hover {
+    background-color: #fff;
+    color: #0F0F0F;
+    cursor: pointer;
+}
+
+@keyframes moveIcons {
+    0% {
+        transform: translatey(0);
+    }
+
+    50% {
+        transform: translatey(20px);
+    }
+
+    100% {
+        transform: translatey(0);
+    }
+}
