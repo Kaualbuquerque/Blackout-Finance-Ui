@@ -57,4 +57,18 @@ Além das funcionalidades, o projeto deverá atender aos seguintes critérios:
 - **Controle de Versão:** Git e GitHub
 
 ---
+## 6. Equipe
 
+01535268 – Amanda Luana Santos Alves
+
+01511663 - Gabriella Lacerda Chaves Korinfsky
+
+01558846 - João Arthur Duarte de Faria
+
+01512676 - José Hugo Chaves Filho
+
+01553544 - José William Guilherme Santos
+
+01516413 - Kauã Albuquerque Xavier de Farias
+
+---
