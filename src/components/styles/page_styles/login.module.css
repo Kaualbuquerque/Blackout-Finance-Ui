@@ -1,0 +1,128 @@
+.login_main {
+    width: 100%;
+    height: 94vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.login_main.light_theme{
+    background-color: #EFEFEF;
+}
+
+.login_main.dark_theme{
+    background-color: #272727;
+}
+
+.form_div {
+    height: 75%;
+    width: 50%;
+    background-color: #fff;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    position: relative;
+}
+
+.form_div form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+form label {
+    font-weight: 500;
+}
+
+form input {
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    padding-left: 1rem;
+}
+
+form button {
+    width: 50%;
+    height: 50px;
+    background-color: #0F0F0F;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 1px 4px #0000001a;
+    cursor: pointer;
+    margin-top: 2rem;
+}
+
+.fluid_banner {
+    background-color: #22272E;
+    color: #fff;
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease-in-out;
+}
+
+.fluid_banner.direita {
+    transform: translateX(100%);
+}
+
+.fluid_banner.esquerda {
+    transform: translateX(0%);
+}
+
+.fluid_banner div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fluid_banner>div {
+    justify-content: space-evenly;
+}
+
+.fluid_banner h3 {
+    font-size: 2rem;
+}
+
+.fluid_banner img {
+    width: 100%;
+    scale: 125%;
+}
+
+.fluid_banner button {
+    background-color: #22272E;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: .7rem 3rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: .2s ease-in-out;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.fluid_banner button:hover {
+    background-color: #fff;
+    color: #0F0F0F;
+}

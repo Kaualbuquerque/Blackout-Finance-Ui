@@ -1,8 +1,8 @@
-import styles from "../styles/footer.module.css"
+import styles from "../styles/component_styles/footer.module.css"
 
-import instagram from "../../assets/icons/instagram.png"
-import github from "../../assets/icons/github.png"
-import x from "../../assets/icons/x.png"
+import instagram from "../../assets/icons/social_midia_icon/instagram.png"
+import github from "../../assets/icons/social_midia_icon/github.png"
+import x from "../../assets/icons/social_midia_icon/X.png"
 
 function Footer() {
     return (

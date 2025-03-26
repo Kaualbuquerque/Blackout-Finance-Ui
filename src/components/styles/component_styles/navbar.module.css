@@ -34,16 +34,36 @@
     font-weight: 500;
 }
 
-.profile a {
+.link{
     color: #fff;
     text-decoration: none;
-    transition: ease-in-out 0.5s;
 }
 
-.profile a:visited {
+.link:visited {
     color: #fff;
 }
 
 .profile p {
     font-size: 2rem;
+}
+
+.iconWrapper {
+    position: relative;
+    width: 30px; /* Ajuste conforme o tamanho do ícone */
+    height: 30px;
+    cursor: pointer;
+}
+
+.icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: scale(0.8);
+}
+
+.icon.active {
+    opacity: 1;
+    transform: scale(1);
 }
