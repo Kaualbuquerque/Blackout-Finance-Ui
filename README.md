@@ -1,54 +1,74 @@
-# React + TypeScript + Vite
+# Blackout Finance
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Introdução
 
-Currently, two official plugins are available:
+Manter o controle financeiro no dia a dia pode ser um desafio, e a falta de organização pode levar a dificuldades no planejamento. O **Blackout Finance** surge como uma solução prática, permitindo que os usuários registrem suas entradas e saídas de dinheiro e acompanhem sua evolução por meio de gráficos diários, mensais e anuais.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Desenvolvido com base nos conhecimentos adquiridos ao longo do semestre, este projeto aplica conceitos de manipulação de dados e visualização gráfica para criar uma ferramenta acessível e intuitiva. O objetivo é facilitar a gestão financeira e incentivar hábitos mais organizados e sustentáveis.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 2. Descrição do Problema
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Muitas pessoas enfrentam dificuldades para manter um controle eficiente de suas finanças, seja por falta de organização, ausência de registros adequados ou pela dificuldade de interpretar seus gastos e ganhos ao longo do tempo. Sem um sistema prático para visualizar essas informações, é comum que despesas desnecessárias passem despercebidas, levando a um planejamento financeiro ineficiente e até a dívidas.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A falta de um controle financeiro adequado afeta diretamente a estabilidade econômica das pessoas, dificultando a tomada de decisões conscientes sobre gastos e investimentos. De acordo com pesquisas sobre educação financeira, grande parte da população não acompanha suas despesas regularmente, o que pode resultar em dificuldades para poupar ou até mesmo em endividamento.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 3. Objetivos
+
+O **Blackout Finance** tem como principal objetivo desenvolver uma plataforma intuitiva para o controle financeiro pessoal, permitindo que os usuários registrem suas entradas e saídas de dinheiro e acompanhem sua evolução por meio de gráficos interativos. Para isso, o projeto busca:
+
+- Criar um sistema de registro de entradas e saídas financeiras de forma simples e acessível.
+- Implementar gráficos dinâmicos que exibam os dados financeiros organizados por dia, mês e ano.
+- Garantir uma interface intuitiva e responsiva para facilitar a usabilidade em diferentes dispositivos.
+- Permitir a exportação ou backup dos dados financeiros para maior segurança e controle.
+- Desenvolver o projeto com escalabilidade, permitindo futuras melhorias e novas funcionalidades.
+
+---
+
+## 4. Escopo do Projeto
+
+O **Blackout Finance** será uma plataforma web para controle financeiro pessoal, permitindo que os usuários registrem e acompanhem suas entradas e saídas de dinheiro. O projeto incluirá funcionalidades como inserção e visualização de transações, exibição de gráficos interativos e interface responsiva.
+
+Entretanto, funcionalidades mais avançadas, como integração com contas bancárias, automação de categorização de despesas e suporte a múltiplos usuários, não serão abordadas nesta versão inicial.
+
+O sistema deverá incluir as seguintes funcionalidades:
+
+- Cadastro e edição de entradas e saídas financeiras.
+- Exibição de gráficos interativos organizados por dia, mês e ano.
+- Interface responsiva para acesso em diferentes dispositivos.
+
+Além das funcionalidades, o projeto deverá atender aos seguintes critérios:
+
+- **Usabilidade:** Interface intuitiva e de fácil navegação.
+- **Desempenho:** Carregamento ágil para garantir uma experiência fluida.
+- **Segurança:** Proteção dos dados do usuário contra acessos não autorizados.
+- **Escalabilidade:** Código estruturado para futuras melhorias e expansões.
+
+---
+
+## 5. Tecnologias Utilizadas
+
+- **Front-end:** HTML, CSS, JavaScript, React
+- **Back-end:** Node.js com Express
+- **Banco de Dados:** PostgresSQL
+- **Controle de Versão:** Git e GitHub
+
+---
+## 6. Equipe
+
+01535268 – Amanda Luana Santos Alves
+
+01511663 - Gabriella Lacerda Chaves Korinfsky
+
+01558846 - João Arthur Duarte de Faria
+
+01512676 - José Hugo Chaves Filho
+
+01553544 - José William Guilherme Santos
+
+01516413 - Kauã Albuquerque Xavier de Farias
+
+---
