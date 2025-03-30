@@ -1,18 +1,17 @@
 import styles from "../styles/page_styles/login.module.css"
 
-import Navbar from "../layout/navbar"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import login_img from "../../assets/images/fluid_banner_login_img.png"
 import cadastro_img from "../../assets/images/fluid_banner_cadastro_img.png"
-import { useNavigate } from "react-router-dom"
+import arrow from "../../assets/icons/others/arrow.png"
 
 function Login() {
 
     const navigate = useNavigate(); // Criando o navegador de redirecionamento
     const [isActivated, setIsActivated] = useState(false)
     const [position, setposition] = useState("direita")
-    const [isDark, setIsDark] = useState<boolean>(false);
 
     // Estados para armazenar os valores dos inputs
     const [formData, setFormData] = useState({
@@ -70,10 +69,14 @@ function Login() {
         navigate("/home");
     }
 
+    const toBlackout = () => {
+        navigate("/")
+    }
+
     return (
-        <div className={styles.container}>
-            <Navbar isDark={isDark} setIsDark={setIsDark} />
-            <main className={`${styles.login_main} ${isDark ? styles.dark_theme : styles.light_theme}`}>
+        <div className={styles.login_container}>
+            <div><img src={arrow} alt="arrow icon" onClick={toBlackout}/></div>
+            <main className={`${styles.login_main}`}>
                 <div className={styles.form_div}>
                     <div>
                         <form onSubmit={handleSubmitCadastro}>

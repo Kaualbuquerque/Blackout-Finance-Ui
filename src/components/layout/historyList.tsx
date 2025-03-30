@@ -6,7 +6,7 @@ interface Transaction {
     descricao: string;
     tipo: string;
     data: string;
-    valor: number;
+    valor: string;  // Alterando para string
 }
 
 interface HistoryListProps {

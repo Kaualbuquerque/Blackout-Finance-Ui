@@ -9,7 +9,7 @@ interface entryHistoryProps {
     descricao: string
     tipo: string
     data: string
-    valor: number
+    valor: string
 }
 
 

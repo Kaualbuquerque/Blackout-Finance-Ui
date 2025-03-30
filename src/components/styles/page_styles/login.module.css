@@ -1,5 +1,18 @@
-.container{
+.login_container{
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login_container>div{
+    height: 1%;
+}
+
+.login_container>div>img {
+    scale: 75%;
+    transform: rotate(180deg);
+    cursor: pointer;
+    padding: 1rem;
 }
 
 .login_main {
@@ -8,15 +21,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.login_main.light_theme{
-    background-color: #EFEFEF;
-}
-
-.login_main.dark_theme{
-    background-color: #272727;
 }
 
 .form_div {

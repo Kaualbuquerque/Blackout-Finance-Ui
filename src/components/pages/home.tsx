@@ -7,11 +7,19 @@ import styles from "../styles/page_styles/home.module.css"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import AddTrasaction from "../layout/addTransaction";
 import HistoryList from "../layout/historyList";
+interface Transaction {
+    tipo: string;      // "Entrada" ou "Saída"
+    valor: string;     // Valor da transação
+    descricao: string; // Descrição da transação
+    data: string;      // Data da transação
+    categoria: string; // Categoria da transação
+}
 
 function Home() {
     ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
     const [isDark, setIsDark] = useState<boolean>(false);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
 
     // Dados para o gráfico diário (separado por horas do dia)
     const dataDay = {
@@ -47,6 +55,14 @@ function Home() {
         ],
     };
 
+    const handleAddTransaction = (transaction: Transaction) => {
+        // Log para ver os dados que estão sendo enviados do formulário
+        console.log('Nova transação:', transaction);
+
+        // Adiciona a nova transação à lista de transações
+        setTransactions([...transactions, transaction]);
+    };
+
     // Dados para o gráfico anual (separado por meses)
     const dataYear = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -64,12 +80,6 @@ function Home() {
         ],
     };
 
-    const transactions = [
-        { categoria: "Academia", descricao: "Mensalidade da academia", tipo: "entrada", valor: 70, data: "20/12/25" },
-        { categoria: "Alimentação", descricao: "Compra no supermercado", tipo: "saida", valor: 150, data: "22/12/25" },
-        { categoria: "Salário", descricao: "Recebimento de pagamento", tipo: "entrada", valor: 2500, data: "30/12/25" }
-    ];
-
     return (
         <div className={`${styles.container}  ${isDark ? styles.dark_theme : styles.light_theme}`}>
             <header>
@@ -83,7 +93,7 @@ function Home() {
                         <Graphic data={dataYear} title="Relatório Anual" />
                     </div>
                     <div className={styles.transation}>
-                        <AddTrasaction />
+                        <AddTrasaction onAddTransaction={handleAddTransaction} />
                         <HistoryList transactions={transactions} />
                     </div>
                 </div>
