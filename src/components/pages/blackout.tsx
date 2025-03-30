@@ -4,7 +4,7 @@ import styles from "../styles/page_styles/blackout.module.css"
 
 import Navbar from "../layout/navbar";
 
-import money_icon from "../../assets/icons/money_icon.png"
+import money_icon from "../../assets/icons/others/money_icon.png"
 import Card from "../layout/card";
 import Footer from "../layout/footer";
 

@@ -35,9 +35,7 @@ function Navbar({ isDark = false, setIsDark }: NavbarProps) {
                             className={`${styles.icon} ${isDark ? styles.active : ""}`}
                         />
                     </div>
-                    <Link to="/login" className={styles.link}><span>Login</span></Link>
-                    <p>|</p>
-                    <Link to="/cadastro" className={styles.link}><span>Cadastro</span></Link>
+                    <Link to="/login" className={styles.link}><span>Inicar Sessão</span></Link>
                 </div>
             </div>
         </div>

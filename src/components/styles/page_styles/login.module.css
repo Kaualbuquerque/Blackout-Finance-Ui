@@ -1,6 +1,10 @@
+.container{
+    height: 100vh;
+}
+
 .login_main {
     width: 100%;
-    height: 94vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,6 +28,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
     position: relative;
+    box-shadow: 0px 1px 4px #000000a1;
 }
 
 .form_div form div {
@@ -81,11 +86,11 @@ form button {
 }
 
 .fluid_banner.direita {
-    transform: translateX(100%);
+    transform: translateX(0%);
 }
 
 .fluid_banner.esquerda {
-    transform: translateX(0%);
+    transform: translateX(100%);
 }
 
 .fluid_banner div {
