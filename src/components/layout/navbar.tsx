@@ -1,28 +1,55 @@
-import styles from "../styles/component_styles/navbar.module.css"
-import { Link } from "react-router-dom";
+// src/layout/navbar.tsx
 
-import sun from "../../assets/icons/theme_icon/sun.png"
-import moon from "../../assets/icons/theme_icon/moon.png"
+import styles from "../styles/component_styles/navbar.module.css";
+import { Link, useNavigate } from "react-router-dom";
+
+import sun from "../../assets/icons/theme_icon/sun.png";
+import moon from "../../assets/icons/theme_icon/moon.png";
 
 interface NavbarProps {
     isDark?: boolean;
     setIsDark?: React.Dispatch<React.SetStateAction<boolean>>;
+    userEmail?: string | null;    // nova prop
 }
 
-function Navbar({ isDark = false, setIsDark }: NavbarProps) {
+export default function Navbar({
+    isDark = false,
+    setIsDark,
+    userEmail = null,
+}: NavbarProps) {
+    const navigate = useNavigate();
 
     const handleThemeToggle = () => {
-        if (setIsDark) {
-            setIsDark(prevState => !prevState);
-        }
+        setIsDark && setIsDark((prev) => !prev);
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Link to="/" className={styles.link}><h2>BLACKOUT FINANCE</h2></Link>
+                <Link to="/" className={styles.link}>
+                    <h2>BLACKOUT FINANCE</h2>
+                </Link>
 
                 <div className={styles.profile}>
+
+
+                    <div className={styles.welcome}>
+                        {userEmail ? (
+                            <div>
+                                <p>Bem-vindo,
+                                </p>
+                                {userEmail}
+                            </div>
+                        ) : (
+                            <Link
+                                to={"/login"}
+                                className={styles.link}
+                                onClick={() => navigate("/login")}
+                            >
+                                Iniciar Sessão
+                            </Link>
+                        )}
+                    </div>
                     <div className={styles.iconWrapper} onClick={handleThemeToggle}>
                         <img
                             src={sun}
@@ -35,11 +62,8 @@ function Navbar({ isDark = false, setIsDark }: NavbarProps) {
                             className={`${styles.icon} ${isDark ? styles.active : ""}`}
                         />
                     </div>
-                    <Link to="/login" className={styles.link}><span>Inicar Sessão</span></Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
-export default Navbar;

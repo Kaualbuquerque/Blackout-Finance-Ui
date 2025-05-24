@@ -44,3 +44,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@media (max-width: 480px) {
+    .entryHistory_container {
+        font-size: .65rem;
+    }
+}

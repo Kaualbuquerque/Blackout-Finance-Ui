@@ -2,171 +2,236 @@ import styles from "../styles/page_styles/login.module.css"
 
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { registerUser, loginUser } from "../../services/api"
 
 import login_img from "../../assets/images/fluid_banner_login_img.png"
 import cadastro_img from "../../assets/images/fluid_banner_cadastro_img.png"
 import arrow from "../../assets/icons/others/arrow.png"
 
 function Login() {
-
-    const navigate = useNavigate(); // Criando o navegador de redirecionamento
+    const navigate = useNavigate()
     const [isActivated, setIsActivated] = useState(false)
-    const [position, setposition] = useState("direita")
+    const [position, setPosition] = useState("direita")
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
-    // Estados para armazenar os valores dos inputs
+    // Estados para armazenar os valores dos inputs de cadastro
     const [formData, setFormData] = useState({
         nome: "",
         cadastro_email: "",
         data_nascimento: "",
         telefone: "",
         cadastro_senha: "",
-        senha_confirm: ""
+        senha_confirm: "",
     })
 
+    // Estados para inputs de login
     const [loginData, setLoginData] = useState({
         login_email: "",
-        login_senha: ""
+        login_senha: "",
     })
 
-    // Manipula as mudanças nos inputs
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
+    // Feedback
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
 
-    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginData({ ...loginData, [e.target.name]: e.target.value })
-    }
+    // Bloqueia scroll ao montar e restaura ao desmontar
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => { document.body.style.overflow = '' }
+    }, [])
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        const sanitizedValue =
+            name === "telefone"           // campo que deve aceitar só dígitos
+                ? value.replace(/\D/g, "")  // remove tudo que não for 0-9
+                : value;                    // demais campos, mantém como veio
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: sanitizedValue,
+        }));
+
+        setError("");
+        setSuccess("");
+    };
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
-
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth <= 480);
+        };
+        window.addEventListener('resize', handleResize);
         return () => {
-            document.body.style.overflow = '';
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    // Submissão do formulário de cadastro
-    const handleSubmitCadastro = (e: React.FormEvent) => {
+    const handleLoginChange = (e: any) => {
+        const { name, value } = e.target
+        setLoginData(prev => ({ ...prev, [name]: value }))
+        setError("")
+    }
+
+    // Cadastro: usa registerUser do api.ts
+    const handleSubmitCadastro = async (e: any) => {
         e.preventDefault()
+        setError("")
+        setSuccess("")
 
         if (formData.cadastro_senha !== formData.senha_confirm) {
-            alert("As senhas não coincidem!")
+            setError("As senhas não coincidem!")
             return
         }
 
-        // Aqui você pode fazer uma requisição ao backend
-        console.log("Cadastro enviado:", formData)
-        setposition("direita");
-        setIsActivated(!isActivated)
-        alert("Cadastro realizado com sucesso!")
+        try {
+            await registerUser({
+                name: formData.nome,
+                dateOfBirth: formData.data_nascimento,
+                phoneNumber: formData.telefone,
+                email: formData.cadastro_email,
+                password: formData.cadastro_senha,
+            })
+
+            setSuccess("Cadastro realizado com sucesso! Faça login agora.")
+            setFormData({ nome: '', cadastro_email: '', data_nascimento: '', telefone: '', cadastro_senha: '', senha_confirm: '' })
+            setPosition('direita')
+            setIsActivated(false)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
-    // Submissão do formulário de login
-    const handleSubmitLogin = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log("Login enviado:", loginData)
-        // Aqui você pode fazer uma requisição ao backend
-        navigate("/home");
-    }
+    // Login: usa loginUser do api.ts
+    const handleSubmitLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
 
-    const toBlackout = () => {
-        navigate("/")
-    }
+        try {
+            // Agora esperamos receber { token, user }
+            const { token, user } = await loginUser({
+                email: loginData.login_email,
+                password: loginData.login_senha,
+            });
+
+            // Armazena o token e o usuário (serializado) no localStorage
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            navigate("/home");
+        } catch (err: any) {
+            const errorMsg =
+                err?.response?.data?.message ||
+                "Email ou senha incorretos. Tente novamente.";
+            setError(errorMsg);
+            console.error("Erro ao fazer login:", err);
+        }
+    };
+
+    const toBlackout = () => navigate('/')
 
     return (
         <div className={styles.login_container}>
-            <div><img src={arrow} alt="arrow icon" onClick={toBlackout}/></div>
-            <main className={`${styles.login_main}`}>
+            <div>
+                <img src={arrow} alt="Voltar" onClick={toBlackout} />
+            </div>
+
+            <main className={styles.login_main}>
                 <div className={styles.form_div}>
-                    <div>
-                        <form onSubmit={handleSubmitCadastro}>
-                            <h2>Criar Conta</h2>
-                            <div>
-                                <label htmlFor="nome">Nome</label>
-                                <input type="text" name="nome" id="nome" placeholder="Digite seu nome"
-                                    value={formData.nome} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="cadastro_email">Email</label>
-                                <input type="email" name="cadastro_email" id="cadastro_email" placeholder="Digite seu email"
-                                    value={formData.cadastro_email} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="data_nascimento">Data de Nascimento</label>
-                                <input type="date" name="data_nascimento" id="data_nascimento"
-                                    value={formData.data_nascimento} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="telefone">Telefone</label>
-                                <input type="text" name="telefone" id="telefone" placeholder="Digite seu telefone"
-                                    value={formData.telefone} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="cadastro_senha">Senha</label>
-                                <input type="password" name="cadastro_senha" id="cadastro_senha" placeholder="Digite sua senha"
-                                    value={formData.cadastro_senha} onChange={handleChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="senha_confirm">Confirme sua Senha</label>
-                                <input type="password" name="senha_confirm" id="senha_confirm" placeholder="Confirme sua senha"
-                                    value={formData.senha_confirm} onChange={handleChange} />
-                            </div>
-                            <button type="submit">Criar Conta</button>
-                        </form>
-                    </div>
 
+
+                    {/* Banner animado */}
                     <div className={`${styles.fluid_banner} ${styles[position]}`}>
-                        {
-                            isActivated ?
-                                (
-                                    <div>
-                                        <div>
-                                            <h3>Iniciar Sessão</h3>
-                                            <p>Clique aqui para acessar sua conta existente!</p>
-                                            <button onClick={() => (setposition("direita"), setIsActivated(!isActivated))}>Login</button>
-                                        </div>
-                                        <div>
-                                            <img src={login_img} alt="" />
-                                        </div>
-                                    </div>
-                                )
-                                :
-                                (
-                                    <div>
-                                        <div>
-                                            <h3>Criar Conta</h3>
-                                            <p>Clique aqui para criar uma nova conta!</p>
-                                            <button onClick={() => (setposition("esquerda"), setIsActivated(!isActivated))}>Cadastrar</button>
-                                        </div>
-                                        <div>
-                                            <img src={cadastro_img} alt="" />
-                                        </div>
-                                    </div>
-                                )
-                        }
+                        {isActivated ? (
+                            <div>
+                                <div>
+                                    <h3>Novidade!</h3>
+                                    <p>Crie uma conta e comece a usar.</p>
+                                    <button type="button" onClick={() => { setPosition('direita'); setIsActivated(false); }}>
+                                        Cadastrar
+                                    </button>
+                                </div>
+                                <img src={cadastro_img} alt="Banner de Cadastro" />
+                            </div>
+                        ) : (
+                            <div>
+                                <div>
+                                    <h3>Iniciar Sessão</h3>
+                                    <p>Clique aqui para acessar sua conta existente!</p>
+                                    <button type="button" onClick={() => { setPosition('esquerda'); setIsActivated(true); }}>
+                                        Login
+                                    </button>
+                                </div>
+                                <img src={login_img} alt="Banner de Login" />
+                            </div>
+                        )}
                     </div>
 
-                    <div>
-                        <form onSubmit={handleSubmitLogin}>
-                            <h2>Acessar Conta</h2>
-                            <div>
-                                <label htmlFor="login_email">Email</label>
-                                <input type="email" name="login_email" id="login_email" placeholder="Digite seu email"
-                                    value={loginData.login_email} onChange={handleLoginChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="login_senha">Senha</label>
-                                <input type="password" name="login_senha" id="login_senha" placeholder="Digite sua senha"
-                                    value={loginData.login_senha} onChange={handleLoginChange} />
-                            </div>
-                            <button type="submit">Acessar Conta</button>
-                        </form>
-                    </div>
+                    {/* Formulário de login */}
+                    <form onSubmit={handleSubmitLogin} className={styles.formBox}>
+                        <h2>Acessar Conta</h2>
+                        {error && <p className={styles.error}>{error}</p>}
+
+                        <input type="email" name="login_email" placeholder="Email" value={loginData.login_email} onChange={handleLoginChange} required />
+                        <input type="password" name="login_senha" placeholder="Senha" value={loginData.login_senha} onChange={handleLoginChange} required />
+                        <button type="submit">Acessar Conta</button>
+                    </form>
+
+                    {/* Novo Banner Fluido para telas menores */}
+                    {isSmallScreen && (
+                        <div className={`${styles.fluid_banner} ${isActivated ? styles.direita : styles.esquerda}`}>
+                            {isActivated ? (
+                                <div>
+                                    <div>
+                                        <h3>Iniciar Sessão</h3>
+                                        <p>Clique aqui para acessar sua conta existente!</p>
+                                        <button onClick={() => (setPosition('direita'), setIsActivated(false))}>Login</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Novo Banner Fluido para telas menores */}
+                    {isSmallScreen && (
+                        <div className={`${styles.fluid_banner} ${!isActivated ? styles.direita : styles.esquerda}`}>
+                            {isActivated ? (
+                                <></>
+                            ) : (
+                                <div>
+                                    <div>
+                                        <h3>Novidade!</h3>
+                                        <p>Crie uma conta e comece a usar.</p>
+                                        <button type="button" onClick={() => { setPosition('esquerda'); setIsActivated(true); }}>
+                                            Cadastrar
+                                        </button>
+                                    </div>
+                                    <img src={cadastro_img} alt="Banner de Cadastro" />
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Formulário de cadastro */}
+                    <form onSubmit={handleSubmitCadastro} className={styles.formBox}>
+                        <h2>Criar Conta</h2>
+                        {error && <p className={styles.error}>{error}</p>}
+                        {success && <p className={styles.success}>{success}</p>}
+
+                        <input name="nome" placeholder="Nome" value={formData.nome} onChange={handleChange} required />
+                        <input type="date" name="data_nascimento" placeholder="Data de Nascimento" value={formData.data_nascimento} onChange={handleChange} required />
+                        <input type="tel" inputMode="numeric" pattern="\d*" name="telefone" placeholder="Telefone" value={formData.telefone} onChange={handleChange} maxLength={11} required />
+                        <input type="email" name="cadastro_email" placeholder="Email" value={formData.cadastro_email} onChange={handleChange} required />
+                        <input type="password" name="cadastro_senha" placeholder="Senha" value={formData.cadastro_senha} onChange={handleChange} required />
+                        <input type="password" name="senha_confirm" placeholder="Confirme sua Senha" value={formData.senha_confirm} onChange={handleChange} required />
+                        <button type="submit">Criar Conta</button>
+                    </form>
                 </div>
-            </main >
-        </div >
+            </main>
+        </div>
     )
 }
-
 
 export default Login

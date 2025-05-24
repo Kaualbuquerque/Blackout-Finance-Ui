@@ -7,6 +7,7 @@ import Navbar from "../layout/navbar";
 import money_icon from "../../assets/icons/others/money_icon.png"
 import Card from "../layout/card";
 import Footer from "../layout/footer";
+import { Link } from "react-router-dom";
 
 function Blackout() {
 
@@ -34,9 +35,11 @@ function Blackout() {
 
             <div className={`${styles.banner} ${isScrolled ? styles.hide : ''}`}>
                 <div>
-                    <img className={styles.icon} src={money_icon} alt="icon 1" />
-                    <img className={styles.icon} src={money_icon} alt="icon 2" />
-                    <img className={styles.icon} src={money_icon} alt="icon 3" />
+                    <div>
+                        <img className={styles.icon} src={money_icon} alt="icon 1" />
+                        <img className={styles.icon} src={money_icon} alt="icon 2" />
+                        <img className={styles.icon} src={money_icon} alt="icon 3" />
+                    </div>
                     <h1>BLACKOUT FINANCE</h1>
                 </div>
             </div>
@@ -73,7 +76,7 @@ function Blackout() {
                             <p>Criar uma conta é rápido e fácil</p>
                         </div>
                         <div>
-                            <button>Cadastrar</button>
+                            <Link to={'/login'}><button>Cadastrar</button></Link>
                         </div>
                     </section>
                 </main>

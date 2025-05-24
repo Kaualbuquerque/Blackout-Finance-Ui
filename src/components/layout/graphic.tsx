@@ -1,6 +1,6 @@
 import styles from "../styles/component_styles/graphic.module.css"
 
-import { ChartData} from "chart.js";
+import { ChartData } from "chart.js";
 import { Chart } from "react-chartjs-2";
 
 interface graphicProps {
@@ -12,6 +12,7 @@ function Graphic({ data, title }: graphicProps) {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             title: {
                 display: true,
@@ -21,8 +22,8 @@ function Graphic({ data, title }: graphicProps) {
     };
 
     return (
-        <div className={styles.grafico}>
-                <Chart type="bar" data={data} options={options} height={75}></Chart>
+        <div className={styles.graphic}>
+            <Chart type="bar" data={data} options={options}></Chart>
         </div>
     )
 }
