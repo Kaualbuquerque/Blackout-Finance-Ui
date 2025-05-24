@@ -48,6 +48,7 @@
 
 .income>p {
     padding-left: 3rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #06E295;
 }
@@ -57,4 +58,22 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: #F1685B;
+}
+
+@media (max-width: 480px) {
+    .totalFinancesContainer {
+        width: 100%;
+    }
+
+    .totalFinance {
+        font-size: 1rem;
+    }
+
+    .income>p {
+        font-size: 1rem;
+    }
+    
+    .expense>p {
+        font-size: 1rem;
+    }
 }

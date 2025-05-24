@@ -88,4 +88,9 @@
     .historyList{
         padding-bottom: 1rem;
     }
+
+    .transation{
+        max-width: 370px;
+    }
+
 }
