@@ -1,0 +1,60 @@
+.totalFinancesContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1rem;
+}
+
+.totalFinancesContainer>div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.totalFinance {
+    width: 60%;
+    padding: .5rem;
+    border: 2px dashed #272727;
+    text-align: center;
+    font-weight: 600;
+}
+
+.circle {
+    border: 2px dashed #272727;
+    border-radius: 100%;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.income .totalFinance,
+.income .circle {
+    background-color: #06E295;
+}
+
+.expense .totalFinance,
+.expense .circle {
+    background-color: #F1685B;
+}
+
+.expense .totalFinance {
+    border-radius: 10px 10px 10px 10px;
+}
+
+.income>p {
+    padding-left: 3rem;
+    font-weight: 600;
+    color: #06E295;
+}
+
+.expense>p {
+    padding-right: 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #F1685B;
+}

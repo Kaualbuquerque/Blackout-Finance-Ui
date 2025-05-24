@@ -1,0 +1,52 @@
+.entryHistory_container {
+    margin-top: 1rem;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+}
+
+.transation_info.entrada {
+    border: 2px solid #06E295;
+    border-radius: 10px;
+    padding: .4rem;
+    color: #06E295;
+}
+
+.transation_info.saida {
+    border: 2px dashed #F1685B;
+    border-radius: 10px;
+    padding: .4rem;
+    color: #F1685B;
+}
+
+.transation_info {
+    width: 100%;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.transation_info ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.textInfo li {
+    max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+    .entryHistory_container {
+        font-size: .65rem;
+    }
+}

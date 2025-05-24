@@ -1,0 +1,260 @@
+.login_container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login_container>div {
+    height: 1%;
+}
+
+.login_container>div>img {
+    scale: 75%;
+    transform: rotate(180deg);
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.login_main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form_div {
+    height: 75%;
+    width: 50%;
+    background-color: #fff;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    position: relative;
+    box-shadow: 0px 1px 4px #000000a1;
+}
+
+.form_div form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formBox {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.formBox label {
+    font-weight: 500;
+}
+
+.formBox input {
+    height: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    padding-left: 1rem;
+}
+
+.formBox button {
+    width: 50%;
+    height: 50px;
+    background-color: #0F0F0F;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 1px 4px #0000001a;
+    cursor: pointer;
+    margin-top: 2rem;
+}
+
+.fluid_banner {
+    background-color: #22272E;
+    color: #fff;
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease-in-out;
+}
+
+.fluid_banner.direita {
+    transform: translateX(0%);
+}
+
+.fluid_banner.esquerda {
+    transform: translateX(100%);
+}
+
+.fluid_banner div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fluid_banner>div {
+    justify-content: space-evenly;
+}
+
+.fluid_banner h3 {
+    font-size: 2rem;
+}
+
+.fluid_banner img {
+    width: 100%;
+    scale: 125%;
+}
+
+.fluid_banner button {
+    background-color: #22272E;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: .7rem 3rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: .2s ease-in-out;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.fluid_banner button:hover {
+    background-color: #fff;
+    color: #0F0F0F;
+}
+
+@media (max-width: 1024px) {
+    .form_div {
+        width: 70%;
+        /* Aumenta a largura em telas menores */
+    }
+
+    .fluid_banner {
+        width: 50%;
+        /* Ajusta a largura da banner */
+    }
+
+    .fluid_banner p {
+        font-size: .9rem;
+        width: 100%;
+    }
+
+    .fluid_banner h3 {
+        font-size: 1.5rem;
+        /* Reduz o tamanho do título */
+    }
+
+    .formBox button {
+        width: 80%;
+        /* Aumenta a largura do botão */
+    }
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+    .form_div {
+        width: 80%;
+        /* Aumenta a largura em telas menores */
+    }
+
+    .fluid_banner {
+        width: 50%;
+        /* Ajusta a largura da banner */
+    }
+
+    .fluid_banner h3 {
+        font-size: 1.5rem;
+        /* Reduz o tamanho do título */
+    }
+
+    .formBox button {
+        width: 80%;
+        /* Aumenta a largura do botão */
+    }
+}
+
+@media (max-width: 480px) {
+
+    .login_container {
+        overflow: hidden;
+        /* Impede que o conteúdo extra cause rolagem */
+    }
+
+    .login_container>div {
+        width: 100%;
+    }
+
+    .login_container>div>img {
+        width: 20%;
+    }
+
+    .form_div {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+
+    .fluid_banner {
+        width: 100%;
+        transition: transform 0.1s ease-in-out;
+    }
+
+    .fluid_banner:nth-child(1) {
+        display: none;
+    }
+
+    .fluid_banner:nth-child(3) {
+        border-radius: 10px 10px 0 0;
+        height: 35%;
+    }
+
+    .fluid_banner:nth-child(4) {
+        height: 65%;
+        top: 35%;
+        left: 0;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .fluid_banner img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .fluid_banner.direita {
+        transform: translateX(0%);
+    }
+
+    .fluid_banner.esquerda {
+        transform: translateX(120%);
+    }
+
+    .fluid_banner h3 {
+        font-size: 1.2rem;
+        /* Reduz ainda mais o tamanho do título */
+    }
+
+    .formBox input {
+        height: 35px;
+        /* Reduz a altura do campo de entrada */
+    }
+
+    .formBox button {
+        height: 45px;
+        /* Reduz a altura do botão */
+        font-size: 0.9rem;
+        /* Reduz o tamanho da fonte do botão */
+    }
+}

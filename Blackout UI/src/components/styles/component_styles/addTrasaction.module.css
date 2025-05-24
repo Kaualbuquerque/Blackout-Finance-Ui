@@ -1,0 +1,160 @@
+.transaction_container {
+    background-color: #222222;
+    color: #fff;
+    width: 95%;
+    border-radius: 25px;
+}
+
+.transaction_container_title {
+    background-color: #1C1C1C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px 15px 0 0;
+    padding: .5rem;
+}
+
+.transaction_container_form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 1rem .5rem 1rem .5rem;
+}
+
+.transaction_container_form div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.transaction_container_form div label{
+    align-self: start;
+    padding-left: 1rem;
+}
+
+.transaction_container_form input {
+    background-color: #ffffff00;
+    color: #fff;
+    height: 25px;
+    width: 85%;
+    margin-top: .2rem;
+    padding-left:.5rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+.transaction_container_form select{
+    background-color: #ffffff00;
+    color: #afafaf;
+    height: 25px;
+    width: 90%;
+    margin-top: .2rem;
+    padding-left:.5rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+.transaction_container_form option{
+    color: #000;
+}
+
+.transaction_container_form input::placeholder {
+    color: #afafaf;
+}
+
+.transaction_container_form button {
+    background-color: #ffffff00;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    height: 35px;
+    width: 100px;
+    margin-top: 1rem;
+    font-size: 1rem;
+    justify-self: end;
+    grid-column: 2; 
+    cursor: pointer;
+}
+
+.transaction_container_form .type{
+    grid-column: 2 span;
+}
+
+.transaction_container_form .type>div {
+    border: 2px solid #fff;
+    width: 75%;
+    border-radius: 15px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 4.5rem;
+    position: relative;
+    z-index: 2;
+    font-weight: 600;
+    color: #222;
+}
+
+.transaction_container_form .type .type_slider {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    border-radius: 12px;
+    z-index: -1;
+    cursor: pointer;
+    transition: left 0.3s ease-in-out; /* Animação suave */
+}
+
+.transaction_container_form .type .type_slider.entrada {
+    background-color: #06E295;
+    left: 0;
+}
+
+.transaction_container_form .type .type_slider.saida {
+    background-color: #F1685B;
+    left: 50%; /* Desloca o slider para a direita */
+}
+
+.transaction_container_form .type>p {
+    z-index: 1; 
+    color: #afafaf;
+}
+
+.error{
+    justify-self: center;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .transaction_container_form .type>div {
+       justify-content: space-around;
+       gap: 10rem;
+    }
+
+    .transaction_container_form input {
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .transaction_container_form {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .transaction_container_form *, .transaction_container_form button{
+        grid-column: 1;
+    }
+
+    .transaction_container_form .type>div {
+       justify-content: space-between;
+       padding-right: 15rem;
+       gap: 5rem;
+    }
+
+    .transaction_container_form input {
+        height: 35px;
+    }
+}

@@ -1,0 +1,159 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.container,
+.navbar {
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0f0f0f;
+    color: #fff;
+    padding: 1em;
+    gap: 1em;
+}
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #fff;
+    list-style: none;
+    gap: 1em;
+    padding: 1em;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0px 1px 5px 3px #0000001a;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    font-weight: 500;
+}
+
+.link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background-color: #fff;
+        transition: all 0.3s ease-in-out;
+        transform-origin: center;
+    }
+
+    &:hover::before {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.link:visited {
+    color: #fff;
+}
+
+
+.welcome>div, .welcome p{
+    font-size: .8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconWrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 100%;
+}
+
+.icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: scale(0.8);
+    scale: 60%;
+}
+
+.icon.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+
+    .navbar ul li {
+        margin-bottom: 0.5em;
+        /* Espaçamento entre os itens */
+    }
+
+    .link {
+        font-size: 1rem;
+    }
+
+    .iconWrapper {
+        width: 30px;
+        /* Reduz o tamanho do ícone */
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0.5em;
+        /* Reduz o padding */
+    }
+
+    .navbar ul {
+        gap: 0.5em;
+        /* Reduz o espaço entre os itens */
+    }
+
+    .link {
+        font-size: .8rem;
+    }
+
+    .iconWrapper {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border: 1px solid #fff;
+        border-radius: 100%;
+    }
+
+    .icon {
+        scale: 50%;
+    }
+
+    .welcome>div, .welcome p{
+        font-size: .7rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
