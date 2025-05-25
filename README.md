@@ -1,63 +1,138 @@
-# Blackout Finance
+# Frontend Documentation
 
-## 1. Introdução
-
-Manter o controle financeiro no dia a dia pode ser um desafio, e a falta de organização pode levar a dificuldades no planejamento. O **Blackout Finance** surge como uma solução prática, permitindo que os usuários registrem suas entradas e saídas de dinheiro e acompanhem sua evolução por meio de gráficos diários, mensais e anuais.
-
-Desenvolvido com base nos conhecimentos adquiridos ao longo do semestre, este projeto aplica conceitos de manipulação de dados e visualização gráfica para criar uma ferramenta acessível e intuitiva. O objetivo é facilitar a gestão financeira e incentivar hábitos mais organizados e sustentáveis.
+Este documento descreve todos os aspectos do front-end do projeto **Blackout Finance**, incluindo tecnologias, componentes, estilo e fluxos de trabalho.
 
 ---
 
-## 2. Descrição do Problema
+## 1. Visão Geral
 
-Muitas pessoas enfrentam dificuldades para manter um controle eficiente de suas finanças, seja por falta de organização, ausência de registros adequados ou pela dificuldade de interpretar seus gastos e ganhos ao longo do tempo. Sem um sistema prático para visualizar essas informações, é comum que despesas desnecessárias passem despercebidas, levando a um planejamento financeiro ineficiente e até a dívidas.
+* **Propósito**: Interface do usuário para o sistema de finanças pessoais Blackout Finance, permitindo cadastro/login, visualização de entradas/saídas, gráficos e histórico de transações.
+* **Tecnologias principais**:
 
-A falta de um controle financeiro adequado afeta diretamente a estabilidade econômica das pessoas, dificultando a tomada de decisões conscientes sobre gastos e investimentos. De acordo com pesquisas sobre educação financeira, grande parte da população não acompanha suas despesas regularmente, o que pode resultar em dificuldades para poupar ou até mesmo em endividamento.
+  * **React** com TypeScript (arquivos `.tsx`)
+  * **HTML** e **CSS** (com módulos CSS para escopo local de estilos)
+  * **Ferramenta de build**: Vite (ou CRA conforme configuração do projeto)
+* **Gerenciamento de requisições**:
 
----
-
-## 3. Objetivos
-
-O **Blackout Finance** tem como principal objetivo desenvolver uma plataforma intuitiva para o controle financeiro pessoal, permitindo que os usuários registrem suas entradas e saídas de dinheiro e acompanhem sua evolução por meio de gráficos interativos. Para isso, o projeto busca:
-
-- Criar um sistema de registro de entradas e saídas financeiras de forma simples e acessível.
-- Implementar gráficos dinâmicos que exibam os dados financeiros organizados por dia, mês e ano.
-- Garantir uma interface intuitiva e responsiva para facilitar a usabilidade em diferentes dispositivos.
-- Permitir a exportação ou backup dos dados financeiros para maior segurança e controle.
-- Desenvolver o projeto com escalabilidade, permitindo futuras melhorias e novas funcionalidades.
+  * Arquivo `API.ts` centraliza chamadas HTTP (`fetch`/`axios`) e contém interfaces TypeScript para tipagem de dados.
 
 ---
 
-## 4. Escopo do Projeto
+## 2. Pré-requisitos
 
-O **Blackout Finance** será uma plataforma web para controle financeiro pessoal, permitindo que os usuários registrem e acompanhem suas entradas e saídas de dinheiro. O projeto incluirá funcionalidades como inserção e visualização de transações, exibição de gráficos interativos e interface responsiva.
+* **Node.js** (versão 16 ou superior)
+* **npm** (versão 8+) ou **Yarn**
 
-Entretanto, funcionalidades mais avançadas, como integração com contas bancárias, automação de categorização de despesas e suporte a múltiplos usuários, não serão abordadas nesta versão inicial.
-
-O sistema deverá incluir as seguintes funcionalidades:
-
-- Cadastro e edição de entradas e saídas financeiras.
-- Exibição de gráficos interativos organizados por dia, mês e ano.
-- Interface responsiva para acesso em diferentes dispositivos.
-
-Além das funcionalidades, o projeto deverá atender aos seguintes critérios:
-
-- **Usabilidade:** Interface intuitiva e de fácil navegação.
-- **Desempenho:** Carregamento ágil para garantir uma experiência fluida.
-- **Segurança:** Proteção dos dados do usuário contra acessos não autorizados.
-- **Escalabilidade:** Código estruturado para futuras melhorias e expansões.
 
 ---
 
-## 5. Tecnologias Utilizadas
+## 3. Instalação e Execução
 
-- **Front-end:** HTML, CSS, JavaScript, React
-- **Back-end:** Node.js com Express
-- **Banco de Dados:** PostgresSQL
-- **Controle de Versão:** Git e GitHub
+No diretório `frontend/`:
+
+```bash
+# Instalar dependências
+npm install
+
+# Rodar em modo desenvolvimento
+npm run dev
+
+# Gerar build de produção
+npm run build
+```
 
 ---
-## 6. Equipe
+
+## 4. Estrutura de Diretórios
+
+```text
+Blackout UI/                           # raiz do frontend
+├── src/
+│   ├── assets/                        # imagens, ícones, fontes
+│   │    └── ...
+│   ├── components/                    # componentes React
+│   │    ├── Navbar/
+│   │    ├── Footer/
+│   │    ├── Card/
+│   │    ├── TotalFinances/
+│   │    ├── AddTransaction/
+│   │    ├── ErrorMessage/
+│   │    ├── HistoryList/
+│   │    ├── EntryHistory/
+│   │    └── Graphic/
+│   ├── services/                      # lógica de requisições (API.ts)
+│   │    └── API.ts
+│   ├── App.tsx                        # componente raiz
+│   ├── main.tsx                       # ponto de entrada (renderização React)
+│   ├── index.css                      # estilos globais
+│   ├── declarations.d.ts              # declarações customizadas TypeScript
+│   └── env.d.ts                       # tipos para variáveis de ambiente
+└── tsconfig.json                      # configurações TypeScript
+```
+
+---
+
+## 5. Componentes Principais
+
+### API.ts
+
+O arquivo **API.ts** abstrai todas as chamadas HTTP (GET, POST e DELETE) para o backend e define as interfaces TypeScript (`User`, `Transaction`, `AuthResponse` etc.), garantindo tipagem segura e consistente na troca de dados entre o front-end e o servidor.
+
+### Navbar
+
+A **Navbar** é o cabeçalho fixo presente em todas as páginas. Nele, exibe-se o nome do projeto **Blackout Finance**, um botão de alternância de tema (claro/escuro) e um espaço que muda dinamicamente: quando o usuário não está autenticado, há um botão que direciona para a tela de login; após o login, exibe o e‑mail do usuário logado.
+
+### Footer
+
+O **Footer** aparece em todas as telas e reúne links para redes sociais, formas de contato e suporte ao cliente. Embora os links sejam fictícios (por se tratar de um projeto acadêmico), eles simulam a experiência de um ambiente de produção, reforçando a consistência visual e de navegação.
+
+### Card
+
+O componente **Card** serve para destacar informações na página inicial “Blackout”. Cada card recebe um título, uma descrição seguindo um design com bordas arredondadas, sombra discreta e espaçamento interno padronizado para manter a harmonia visual.
+
+### TotalFinances
+
+O **TotalFinances** apresenta o saldo agregado das transações do usuário. Caso o tipo seja "Entrada", o número aparece em verde (representando entradas); se for do tipo "Saída", fica em vermelho (representando saídas). Esse feedback colorido ajuda o usuário a identificar rapidamente sua situação financeira.
+
+### AddTransaction
+
+**AddTransaction** é o formulário responsável por cadastrar novas transações. Ele contém campos de valor, tipo (entrada/saída), descrição, data, hora e categoria. Em caso de erro de validação ou falha na requisição, o componente **ErrorMessage** é acionado para exibir a mensagem de erro correspondente.
+
+### ErrorMessage
+
+O **ErrorMessage** é acionado dentro de formulários para exibir de forma clara e destacada erros de validação ou de comunicação com o backend. A mensagem é apresentada em um estilo diferenciado, em vermelho, para chamar a atenção do usuário.
+
+### HistoryList
+
+O **HistoryList** recebe um array de transações e renderiza, para cada item, um **EntryHistory**. Ele organiza os registros em forma de lista, facilitando a leitura.
+
+### EntryHistory
+
+O **EntryHistory** mostra os detalhes de cada transação — tipo, valor, descrição e data — e inclui um ícone de lixeira que, ao ser clicado, exclui a transação correspondente, atualizando tanto a interface quanto o backend.
+
+### Graphic
+
+O componente **Graphic** gera gráficos das transações agrupadas por hora, dia ou mês. Utilizando a biblioteca Chart.js, ele recebe os dados formatados, produzindo visualizações em barras que auxiliam o usuário na análise temporal de suas movimentações.
+
+## 6. Style Guide. Style Guide. Style Guide Style Guide
+
+* **Nomenclatura**:
+
+  * Componentes em PascalCase (`MyComponent.tsx`)
+  * Classes CSS com módulos (`ComponentName.module.css`)
+* **Arquivos de estilo**: escopo local por componente
+
+---
+
+## 8. Build e Deploy
+
+* **Fluxo de branches**: GitHub Flow
+* **CI/CD**: Vercel (deploy automático em `main`)
+* **Comando de deploy**: configurado no dashboard do Vercel
+
+---
+
+## 9. Equipe
 
 01535268 – Amanda Luana Santos Alves
 
@@ -72,3 +147,5 @@ Além das funcionalidades, o projeto deverá atender aos seguintes critérios:
 01516413 - Kauã Albuquerque Xavier de Farias
 
 ---
+
+*Esta documentação será atualizada conforme novas funcionalidades e alterações no projeto.*

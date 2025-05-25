@@ -13,6 +13,7 @@ function Graphic({ data, title }: graphicProps) {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
+        type: "bar",
         plugins: {
             title: {
                 display: true,
