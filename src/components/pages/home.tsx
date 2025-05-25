@@ -4,14 +4,14 @@ import Graphic from "../layout/graphic";
 import Navbar from "../layout/navbar"
 import styles from "../styles/page_styles/home.module.css"
 
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController } from "chart.js";
 import HistoryList from "../layout/historyList";
 import { Transaction, deleteExpense, deleteIncome, fetchEntradas, fetchSaidas } from "../../services/api";
 import AddTransaction from "../layout/addTransaction";
 import TotalFinances from "../layout/totalFinances";
 
 function Home() {
-    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
 
     const [isDark, setIsDark] = useState<boolean>(false);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
