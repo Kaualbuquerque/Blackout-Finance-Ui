@@ -1,10 +1,22 @@
 {
   "files": [],
   "compilerOptions": {
-    "types": ["vite/client"]
+    "jsx": "react-jsx", // permite usar JSX em .tsx
+    "esModuleInterop": true, // facilita import de módulos CommonJS
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "types": [ // tipos globais para testes e Vite
+      "vite/client",
+      "jest",
+      "@testing-library/jest-dom"
+    ]
   },
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

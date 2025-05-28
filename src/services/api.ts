@@ -43,7 +43,7 @@ export interface Transaction {
   categoria: string;
 }
 
-interface IncomeResponse {
+export interface IncomeResponse {
   newIncome: Array<{
     id?: number;
     value: number;

@@ -11,7 +11,7 @@ function HistoryList({ transactions, onDelete }: HistoryListProps) {
     return (
         <div className={styles.history}>
             {transactions.map((transaction) => (
-                <EntryHistory transaction={transaction} onDelete={onDelete} />
+                <EntryHistory transaction={transaction} onDelete={onDelete} key={transaction.id}/>
             ))}
         </div>
     );
