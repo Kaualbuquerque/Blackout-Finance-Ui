@@ -48,7 +48,6 @@ function Home() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [totalIncome, setTotalIncome] = useState<number>(0);
     const [totalExpense, setTotalExpense] = useState<number>(0);
-    const [filter, setFilter] = useState('');
 
     useEffect(() => {
         const init = async () => {
@@ -123,9 +122,6 @@ function Home() {
             }
         });
 
-
-
-
         return {
             labels: [...Array(24).keys()].map((h) =>
                 h.toString().padStart(2, "0") + "h"
@@ -178,10 +174,6 @@ function Home() {
         };
     };
 
-    const filteredTransactions = transactions.filter((t) =>
-        t.categoria.toLowerCase().includes(filter.toLowerCase())
-    );
-
     return (
         <div className={`${styles.container} ${isDark ? styles.dark_theme : styles.light_theme}`}>
             <header>
@@ -205,13 +197,7 @@ function Home() {
                             onErrorClear={() => setErrorMessage(null)}
                         />
                         <div className={styles.historyList}>
-                            <input
-                                type="text"
-                                placeholder="Filtrar por categoria..."
-                                value={filter}
-                                onChange={(e) => setFilter(e.target.value)}
-                            />
-                            <HistoryList transactions={filteredTransactions} onDelete={handleDelete} />
+                            <HistoryList transactions={transactions} onDelete={handleDelete} />
                         </div>
                     </div>
                 </div>
