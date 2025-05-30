@@ -40,7 +40,7 @@ function Footer() {
             </div>
             <hr />
             <div>
-                <p>Copyright © 2025 Blackout Ltd.</p>
+                <p>Copyright © 2025 Blackout Finances</p>
             </div>
         </div>
     )

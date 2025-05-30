@@ -2,25 +2,21 @@
 
 import styles from "../styles/component_styles/navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "../../context/ThemeContext";
 
 import sun from "../../assets/icons/theme_icon/sun.png";
 import moon from "../../assets/icons/theme_icon/moon.png";
 
 interface NavbarProps {
-    isDark?: boolean;
-    setIsDark?: React.Dispatch<React.SetStateAction<boolean>>;
-    userEmail?: string | null;    // nova prop
+    userEmail?: string | null; // nova prop para exibir e-mail do usuário
 }
 
-export default function Navbar({
-    isDark = false,
-    setIsDark,
-    userEmail = null,
-}: NavbarProps) {
+export default function Navbar({ userEmail = null }: NavbarProps) {
     const navigate = useNavigate();
+    const { isDark, toggleTheme } = useTheme();
 
     const handleThemeToggle = () => {
-        setIsDark && setIsDark((prev) => !prev);
+        toggleTheme();
     };
 
     return (
@@ -31,18 +27,15 @@ export default function Navbar({
                 </Link>
 
                 <div className={styles.profile}>
-
-
                     <div className={styles.welcome}>
                         {userEmail ? (
                             <div>
-                                <p>Bem-vindo,
-                                </p>
+                                <p>Bem-vindo,</p>
                                 {userEmail}
                             </div>
                         ) : (
                             <Link
-                                to={"/login"}
+                                to="/login"
                                 className={styles.link}
                                 onClick={() => navigate("/login")}
                             >
@@ -50,6 +43,7 @@ export default function Navbar({
                             </Link>
                         )}
                     </div>
+
                     <div className={styles.iconWrapper} onClick={handleThemeToggle}>
                         <img
                             src={sun}

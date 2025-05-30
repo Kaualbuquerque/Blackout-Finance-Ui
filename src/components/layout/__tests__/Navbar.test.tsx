@@ -1,45 +1,54 @@
+// src/context/ThemeContext.tsx  (só para referência)
+// export const ThemeContext = createContext<ThemeContextType|undefined>(undefined);
+
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "../navbar";
+import { ThemeContext } from "../../../context/ThemeContext";  // ajuste o import
 
-// Mock da função de mudança de tema
-const mockSetIsDark = jest.fn();
+// mock da função de toggle
+const mockToggleTheme = jest.fn();
 
-const renderNavbar = (props = {}) => {
+interface RenderOptions {
+  isDark?: boolean;
+  toggleTheme?: () => void;
+  userEmail?: string | null;
+}
+
+const renderNavbar = ({
+  isDark = false,
+  toggleTheme = mockToggleTheme,
+  userEmail = null,
+}: RenderOptions = {}) => {
   return render(
     <BrowserRouter>
-      <Navbar {...props} />
+      <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+        <Navbar userEmail={userEmail} />
+      </ThemeContext.Provider>
     </BrowserRouter>
   );
 };
 
 describe("Navbar Component", () => {
-
-  // 🧪 1. Teste de Renderização
   it("should render the brand and login link when user is not logged in", () => {
     renderNavbar();
-
     expect(screen.getByText("BLACKOUT FINANCE")).toBeInTheDocument();
     expect(screen.getByText("Iniciar Sessão")).toBeInTheDocument();
   });
 
-  // 🧪 2. Teste de Interação
   it("should toggle theme when clicking on icon wrapper", () => {
-    renderNavbar({ isDark: false, setIsDark: mockSetIsDark });
-
-    const iconWrapper = screen.getByRole("img", { name: "Sun Icon" }).parentElement!;
+    renderNavbar({ isDark: false, toggleTheme: mockToggleTheme });
+    // captura o wrapper clicável a partir do ícone
+    const sunImg = screen.getByRole("img", { name: "Sun Icon" });
+    const iconWrapper = sunImg.parentElement!;
     fireEvent.click(iconWrapper);
-
-    expect(mockSetIsDark).toHaveBeenCalledTimes(1);
+    expect(mockToggleTheme).toHaveBeenCalledTimes(1);
   });
 
-  // 🧪 3. Teste Unitário de lógica condicional
   it("should display user email when logged in", () => {
     const email = "user@example.com";
     renderNavbar({ userEmail: email });
-
     expect(screen.getByText("Bem-vindo,")).toBeInTheDocument();
     expect(screen.getByText(email)).toBeInTheDocument();
   });
-
 });

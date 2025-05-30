@@ -31,7 +31,7 @@ describe("Footer Component", () => {
     const year = getCurrentYear();
 
     expect(
-      screen.getByText(`Copyright © ${year} Blackout Ltd.`)
+      screen.getByText(`Copyright © ${year} Blackout Finances`)
     ).toBeInTheDocument();
   });
 });

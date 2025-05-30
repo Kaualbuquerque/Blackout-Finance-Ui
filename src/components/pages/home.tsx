@@ -1,19 +1,48 @@
+// src/pages/Home.tsx
 import { useEffect, useState } from "react";
-import Footer from "../layout/footer"
+import Footer from "../layout/footer";
 import Graphic from "../layout/graphic";
-import Navbar from "../layout/navbar"
-import styles from "../styles/page_styles/home.module.css"
+import Navbar from "../layout/navbar";
+import styles from "../styles/page_styles/home.module.css";
 
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController } from "chart.js";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    BarController,
+} from "chart.js";
 import HistoryList from "../layout/historyList";
-import { Transaction, deleteExpense, deleteIncome, fetchEntradas, fetchSaidas } from "../../services/api";
+import {
+    Transaction,
+    deleteExpense,
+    deleteIncome,
+    fetchEntradas,
+    fetchSaidas,
+} from "../../services/api";
 import AddTransaction from "../layout/addTransaction";
 import TotalFinances from "../layout/totalFinances";
 
-function Home() {
-    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
+// Contexto de tema
+import { useTheme } from "../../context/ThemeContext";
 
-    const [isDark, setIsDark] = useState<boolean>(false);
+function Home() {
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend,
+        BarController
+    );
+
+    // ✅ Pega o tema global
+    const { isDark } = useTheme();
+
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -33,20 +62,24 @@ function Home() {
             }
 
             const entradas = await fetchEntradas().catch((err) => {
-                console.warn("Nenhuma entrada encontrada ou erro ao buscar entradas.", err);
+                console.warn("Erro ao buscar entradas.", err);
                 return [] as Transaction[];
             });
-
             const saidas = await fetchSaidas().catch((err) => {
-                console.warn("Nenhuma saída encontrada ou erro ao buscar saídas.", err);
+                console.warn("Erro ao buscar saídas.", err);
                 return [] as Transaction[];
             });
 
             setTransactions([...entradas, ...saidas]);
 
-            // Soma dos totais
-            const totalEntradas = entradas.reduce((acc, curr) => acc + parseFloat(curr.valor), 0);
-            const totalSaidas = saidas.reduce((acc, curr) => acc + parseFloat(curr.valor), 0);
+            const totalEntradas = entradas.reduce(
+                (acc, curr) => acc + parseFloat(curr.valor),
+                0
+            );
+            const totalSaidas = saidas.reduce(
+                (acc, curr) => acc + parseFloat(curr.valor),
+                0
+            );
 
             setTotalIncome(totalEntradas);
             setTotalExpense(totalSaidas);
@@ -56,54 +89,55 @@ function Home() {
     }, []);
 
     const handleAddTransaction = (transaction: Transaction) => {
-        setTransactions(prev => [...prev, transaction]);
+        setTransactions((prev) => [...prev, transaction]);
     };
 
     const handleDelete = async (id: number, tipo: "Entrada" | "Saída") => {
         try {
             if (tipo === "Entrada") await deleteIncome(id);
             else await deleteExpense(id);
-            setTransactions(prev => prev.filter(t => t.id !== id));
-            setErrorMessage(null); // Limpa erro anterior, se existir
+            setTransactions((prev) => prev.filter((t) => t.id !== id));
+            setErrorMessage(null);
         } catch (error: any) {
             console.error("Erro ao deletar transação:", error);
             setErrorMessage(error.message || "Erro ao deletar transação.");
         }
     };
 
-
-    // Gera dados por hora (gráfico diário)
     const buildDataByHour = () => {
         const entries = new Array(24).fill(0);
         const exits = new Array(24).fill(0);
         const today = new Date();
-        today.setUTCHours(0, 0, 0, 0); // Zera hora para comparar só a data em UTC
-        transactions.forEach(t => {
+        today.setUTCHours(0, 0, 0, 0);
+
+        transactions.forEach((t) => {
             const tDate = new Date(t.data);
             const transactionDate = new Date(tDate);
-            transactionDate.setUTCHours(0, 0, 0, 0); // Zera hora também em UTC
+            transactionDate.setUTCHours(0, 0, 0, 0);
             if (transactionDate.getTime() === today.getTime()) {
-                const hour = tDate.getUTCHours(); // Usa getUTCHours para pegar a hora em UTC
+                const hour = tDate.getUTCHours();
                 const value = parseFloat(t.valor);
                 if (t.tipo === "Entrada") entries[hour] += value;
                 if (t.tipo === "Saída") exits[hour] += value;
             }
         });
+
         return {
-            labels: [...Array(24).keys()].map(h => `${h.toString().padStart(2, "0")}h`),
+            labels: [...Array(24).keys()].map((h) =>
+                h.toString().padStart(2, "0") + "h"
+            ),
             datasets: [
                 { label: "Entradas", data: entries, backgroundColor: "rgba(69, 235, 254, 1)" },
-                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" }
-            ]
+                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" },
+            ],
         };
     };
 
-    // Gera dados por dia do mês (gráfico mensal)
     const buildDataByDay = () => {
         const entries = new Array(31).fill(0);
         const exits = new Array(31).fill(0);
 
-        transactions.forEach(t => {
+        transactions.forEach((t) => {
             const date = new Date(t.data);
             const day = date.getDate() - 1;
             const value = parseFloat(t.valor);
@@ -115,17 +149,16 @@ function Home() {
             labels: Array.from({ length: 31 }, (_, i) => `${i + 1}`),
             datasets: [
                 { label: "Entradas", data: entries, backgroundColor: "rgba(69, 235, 254, 1)" },
-                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" }
-            ]
+                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" },
+            ],
         };
     };
 
-    // Gera dados por mês (gráfico anual)
     const buildDataByMonth = () => {
         const entries = new Array(12).fill(0);
         const exits = new Array(12).fill(0);
 
-        transactions.forEach(t => {
+        transactions.forEach((t) => {
             const month = new Date(t.data).getMonth();
             const value = parseFloat(t.valor);
             if (t.tipo === "Entrada") entries[month] += value;
@@ -136,14 +169,16 @@ function Home() {
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [
                 { label: "Entradas", data: entries, backgroundColor: "rgba(69, 235, 254, 1)" },
-                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" }
-            ]
+                { label: "Saídas", data: exits, backgroundColor: "rgba(241, 104, 91, 1)" },
+            ],
         };
     };
 
     return (
         <div className={`${styles.container} ${isDark ? styles.dark_theme : styles.light_theme}`}>
-            <header className={"navbar"}><Navbar isDark={isDark} setIsDark={setIsDark} userEmail={userEmail} /></header>
+            <header>
+                <Navbar userEmail={userEmail} />
+            </header>
             <main className={styles.home_main}>
                 <div className={styles.grid}>
                     <div className={styles.graphics}>
@@ -161,16 +196,17 @@ function Home() {
                             errorMessage={errorMessage}
                             onErrorClear={() => setErrorMessage(null)}
                         />
-
                         <div className={styles.historyList}>
                             <HistoryList transactions={transactions} onDelete={handleDelete} />
                         </div>
                     </div>
                 </div>
             </main>
-            <footer><Footer /></footer>
+            <footer>
+                <Footer />
+            </footer>
         </div>
     );
 }
 
-export default Home
+export default Home;
