@@ -99,7 +99,7 @@ export default function Blackout() {
                             <p>Criar uma conta é rápido e fácil</p>
                         </div>
                         <div>
-                            <Link to={"/home"}>
+                            <Link to={"/login"}>
                                 <button>Cadastrar</button>
                             </Link>
                         </div>
