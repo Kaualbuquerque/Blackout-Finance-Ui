@@ -123,6 +123,9 @@ function Home() {
             }
         });
 
+
+
+
         return {
             labels: [...Array(24).keys()].map((h) =>
                 h.toString().padStart(2, "0") + "h"
@@ -175,6 +178,10 @@ function Home() {
         };
     };
 
+    const filteredTransactions = transactions.filter((t) =>
+        t.categoria.toLowerCase().includes(filter.toLowerCase())
+    );
+
     return (
         <div className={`${styles.container} ${isDark ? styles.dark_theme : styles.light_theme}`}>
             <header>
@@ -203,9 +210,8 @@ function Home() {
                                 placeholder="Filtrar por categoria..."
                                 value={filter}
                                 onChange={(e) => setFilter(e.target.value)}
-                                className={styles.filterInput} // opcional para estilizar
                             />
-                            <HistoryList transactions={transactions} onDelete={handleDelete} />
+                            <HistoryList transactions={filteredTransactions} onDelete={handleDelete} />
                         </div>
                     </div>
                 </div>
