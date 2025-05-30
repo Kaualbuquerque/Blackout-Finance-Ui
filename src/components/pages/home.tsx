@@ -48,6 +48,7 @@ function Home() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [totalIncome, setTotalIncome] = useState<number>(0);
     const [totalExpense, setTotalExpense] = useState<number>(0);
+    const [filter, setFilter] = useState('');
 
     useEffect(() => {
         const init = async () => {
@@ -197,6 +198,13 @@ function Home() {
                             onErrorClear={() => setErrorMessage(null)}
                         />
                         <div className={styles.historyList}>
+                            <input
+                                type="text"
+                                placeholder="Filtrar por categoria..."
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                                className={styles.filterInput} // opcional para estilizar
+                            />
                             <HistoryList transactions={transactions} onDelete={handleDelete} />
                         </div>
                     </div>

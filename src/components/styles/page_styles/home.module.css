@@ -73,6 +73,17 @@
     padding: 1rem;
 }
 
+.historyList input {
+    background-color: #ffffff00;
+    color: #fff;
+    height: 25px;
+    width: 85%;
+    margin-top: .2rem;
+    padding-left:.5rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
 @media (max-width: 1024px) {
 
     .grid {
